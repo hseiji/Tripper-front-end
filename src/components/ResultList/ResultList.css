@@ -1,0 +1,12 @@
+.results-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  
+}
+
+ul {
+  list-style: none;
+}

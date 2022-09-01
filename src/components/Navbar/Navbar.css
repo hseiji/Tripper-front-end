@@ -1,0 +1,39 @@
+.navbar {
+  background-color: rgb(142, 214, 250);
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  height: 15%;
+  /* align-items: center; */
+  text-align: center;
+  align-content: center;
+}
+
+.navbarLogo {
+  display: flex;
+  width: 150px;
+  height: 90 px;
+  align-items: center;
+}
+
+.signIn {
+  padding-right: 30px;
+  padding-bottom: 30 px;
+  display: flex;
+  flex-direction:column;
+  align-content:space-around;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+  border-color: #0066A2;
+  border-radius: 20px;
+}
+
+.signOut {
+  padding-right: 30px;
+  padding-bottom: 30 px;
+  display: flex;
+  flex-direction:column;
+  align-content:space-around;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
