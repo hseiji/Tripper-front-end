@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { AppContext } from "../hooks/useAppContext";
+import React from "react";
+// import { AppContext } from "../hooks/useAppContext";
 
 import "./Login.css";
 
-export default function Login({ formData, setFormData, username, password }) {
+export default function Login({ username, password }) {
   // React States
   // const [errorMessages, setErrorMessages] = useState({});
   // const [isSubmitted, setIsSubmitted] = useState(false);
@@ -31,7 +31,7 @@ export default function Login({ formData, setFormData, username, password }) {
   //   pass: "invalid password",
   // };
 
-  const { login } = useContext(AppContext);
+  // const { login } = useContext(AppContext);
 
   // const handleChange = (e) => {
   //   const newFormData = { ...formData };
