@@ -34,7 +34,7 @@ export const SearchBar = () => {
     e.preventDefault();
 
     try {
-      const resp = await axios.get(`/api/events/${keyword}/${location}`);
+      const resp = await axios.get(`/api/events/search/${keyword}/${location}`);
       resultsSet(resp.data);
       console.log("results:", resp.data);
     } catch (error) {
