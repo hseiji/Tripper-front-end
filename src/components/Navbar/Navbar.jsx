@@ -6,10 +6,8 @@ import { AppContext } from "../hooks/useAppContext";
 
 const logo = require("./TripperLogo.png");
 
-export default function Navbar({ setFormData }) {
-  // const clearData = () => {
-  //   return setFormData("");
-  // };
+export default function Navbar() {
+
   const { user } = useContext(AppContext);
 
   // For presentation purposes...Demo

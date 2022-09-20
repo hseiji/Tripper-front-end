@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer } from "react";
 import AppReducer from "./useAppReducer";
 import Axios from "axios";
 
@@ -23,7 +23,14 @@ const initialState = {
   ],
   selectedPlan: 1,
   showRoutes: false,
-  user: { name: "User", id: 1 },
+  user: { 
+    name: "Shakespeare", 
+    id: 1,
+    email: "shakespeare@lighthouse.com",
+    password: "password",
+    lat: "51.50804",
+    lng: "-0.09722"
+  },
 };
 
 export const AppContext = createContext(initialState);
@@ -31,46 +38,6 @@ export const AppContext = createContext(initialState);
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  useEffect(() => {
-    
-    let email = "shakespeare@lighthouse.com";
-    let password = "password";
-    
-    login(email,password);
-    
-  }, []);
-
-  const login = (email, password) => {
-    let user = { email, password };
-    Axios.post("/api/users/login", { user }).then((res) => {
-      dispatch({
-        type: "SET_USER",
-        payload: {
-          user: { name: res.data.user[0].name, id: res.data.user[0].id },
-        },
-      });
-
-      Axios.get(`/api/users/plans/user/${res.data.user[0].id}`).then((res) => {
-        if (res.data.plan) {
-          dispatch({
-            type: "SET_PLANS",
-            payload: {
-              plans: res.data.plan,
-            },
-          });
-
-          Axios.get(`/api/users/plans/${res.data.plan[0].id}`).then((res) => {
-            dispatch({
-              type: "SET_EVENTS",
-              payload: {
-                events: res.data.event,
-              },
-            });
-          });
-        }
-      });
-    });
-  };
 
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
@@ -212,7 +179,6 @@ export const AppProvider = ({ children }) => {
 
   const value = {
     events: state.events,
-    login,
     user: state.user,
     addPlan,
     changePlan,
