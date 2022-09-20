@@ -10,9 +10,6 @@ export default function Navbar() {
 
   const { user } = useContext(AppContext);
 
-  // For presentation purposes...Demo
-  const username = "Shakespeare";
-
   return (
     <div className="navbar">
       <div className="navbarLogo" href="#">
@@ -29,7 +26,7 @@ export default function Navbar() {
 
       <SearchBar />
 
-      {!username && (
+      {!user.name && (
         <div className="signIn">
           <Link to="/login">
             <button>Sign In</button>
@@ -37,7 +34,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {username && (
+      {user.name && (
         <div className="signOut">
           <h3>Hi, {user.name}</h3>
           <Link to="/profile">

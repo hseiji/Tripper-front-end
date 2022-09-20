@@ -9,6 +9,8 @@ export const Map = (props) => {
     id: 1,
   }
 
+  console.log("rendering map");
+
   return (
     <MapContainer center={[props.user.lat, props.user.lng]} zoom={13} scrollWheelZoom={true}>
       <TileLayer

@@ -27,5 +27,5 @@
     "not dead",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:8001"
+  "proxy": "https://tripper-planner.herokuapp.com/"
 }

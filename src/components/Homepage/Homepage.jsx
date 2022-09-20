@@ -1,17 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Map } from "../Map/Map";
 import "./Homepage.css";
 import { ResultList } from "../ResultList/ResultList";
 import { ListEvents } from "../ListEvents/ListEvents";
 import { ListCategories } from "../ListCategories/ListCategories";
+import { AppContext } from "../hooks/useAppContext";
 
 export default function Homepage() {
   
-  const user = {
-    id: 1,
-    lat: 43.64446719365264,
-    lng: -79.38649706503828,
-  };
+  const { user } = useContext(AppContext);
   
   return (
     <div className="wrapper-main">

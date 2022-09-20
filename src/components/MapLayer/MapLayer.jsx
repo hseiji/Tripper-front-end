@@ -22,7 +22,7 @@ export const MapLayer = (props) => {
   const map = useMap();
   
   useEffect(() => {
-    console.log("rendering map", events);
+    console.log("rendering map events", events);
 
   }, [events]);
 
