@@ -63,6 +63,12 @@ export const AppProvider = ({ children }) => {
     
     Axios.get(`/api/events`)
       .then((res) => {
+        dispatch({
+          type: "SET_EVENTS",
+          payload: {
+            events: res.rows,
+          }
+        })
         console.log("the data: ", res);
       })
 
