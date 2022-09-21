@@ -41,37 +41,26 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
 
-    // Axios.get(`/api/plans/${state.user[0].id}`).then((res) => {
-    //   if (res.data.plan) {
-    //     dispatch({
-    //       type: "SET_PLANS",
-    //       payload: {
-    //         plans: res.data.plan,
-    //       },
-    //     });
-        
-    //     Axios.get(`/api/events/${state.plan[0].id}`).then((res) => {
-    //       dispatch({
-    //         type: "SET_EVENTS",
-    //         payload: {
-    //           events: res.data.event,
-    //         },
-    //       });
-    //     });
-    //   }
-    // });
-    
-    Axios.get(`/api/events`)
-      .then((res) => {
+    Axios.get(`/api/plans/${state.user[0].id}`).then((res) => {
+      if (res.data.plan) {
         dispatch({
-          type: "SET_EVENTS",
+          type: "SET_PLANS",
           payload: {
-            events: res.rows,
-          }
-        })
-        console.log("the data: ", res);
-      })
-
+            plans: res.rows,
+          },
+        });
+        
+        Axios.get(`/api/events/${state.plan[0].id}`).then((res) => {
+          dispatch({
+            type: "SET_EVENTS",
+            payload: {
+              events: res.rows,
+            },
+          });
+        });
+      }
+    });
+    
   },[]);
     
   const addPlan = (planName) => {
