@@ -34,7 +34,7 @@ export const ListCategories = () => {
 
     try {
       console.log("search for: ", keyword, location);
-      const resp = await Axios.get(`/api/events/${keyword}/${location}`);
+      const resp = await Axios.get(`/api/events/search/${keyword}/${location}`);
       resultsSet(resp.data);
 
       console.log("results:", resp.data);

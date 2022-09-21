@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import AppReducer from "./useAppReducer";
 import Axios from "axios";
 
@@ -36,9 +36,38 @@ const initialState = {
 export const AppContext = createContext(initialState);
 
 export const AppProvider = ({ children }) => {
+
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
+  useEffect(() => {
 
+    // Axios.get(`/api/plans/${state.user[0].id}`).then((res) => {
+    //   if (res.data.plan) {
+    //     dispatch({
+    //       type: "SET_PLANS",
+    //       payload: {
+    //         plans: res.data.plan,
+    //       },
+    //     });
+        
+    //     Axios.get(`/api/events/${state.plan[0].id}`).then((res) => {
+    //       dispatch({
+    //         type: "SET_EVENTS",
+    //         payload: {
+    //           events: res.data.event,
+    //         },
+    //       });
+    //     });
+    //   }
+    // });
+    
+    Axios.get(`/api/events`)
+      .then((res) => {
+        console.log("the data: ", res);
+      })
+
+  },[]);
+    
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
     Axios.put("/api/plans", { info }).then((res) => {
