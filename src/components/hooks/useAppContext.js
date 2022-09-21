@@ -28,8 +28,8 @@ const initialState = {
       id: 1,
       email: "shakespeare@lighthouse.com",
       password: "password",
-      lat: "43.70773264288628",
-      lng: "-79.37463397752462"
+      lat: "43.6532976025993",
+      lng: "-79.38359538925825"
   },
 };
 
@@ -47,8 +47,8 @@ export const AppProvider = ({ children }) => {
   },[]);
 
   const loadPlanEvents = async () => {
+
     const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
-    console.log("resp", respPlans);
 
     dispatch({
       type: "SET_PLANS",
@@ -57,9 +57,7 @@ export const AppProvider = ({ children }) => {
       },
     });
 
-    console.log("state.plans[0].id", state.plans[0].id);
     const respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
-    console.log("respEvents: ", respEvents);
      
     dispatch({
       type: "SET_EVENTS",
@@ -72,7 +70,7 @@ export const AppProvider = ({ children }) => {
     
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
-    Axios.put("/api/plans", { info }).then((res) => {
+    Axios.put("/api/plans/", { info }).then((res) => {
       Axios.get(`/api/plans/${state.user.id}`).then((res) => {
         if (res.data.plan) {
           dispatch({
@@ -82,7 +80,7 @@ export const AppProvider = ({ children }) => {
             },
           });
 
-          Axios.get(`/api/events/${res.data.plan[0].id}`).then((res) => {
+          Axios.get(`/api/events/${res.data.plans[0].id}`).then((res) => {
             dispatch({
               type: "SET_EVENTS",
               payload: {
@@ -136,7 +134,7 @@ export const AppProvider = ({ children }) => {
     console.log("deleteFromMap: ", updatedMap);
     console.log("id of deleted", id);
 
-    Axios.delete(`/api/events/${id}`).then(() => {
+    Axios.delete(`/api/events/id/${id}`).then(() => {
       console.log("Cancelled.");
     });
 
