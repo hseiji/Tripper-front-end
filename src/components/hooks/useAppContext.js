@@ -43,6 +43,7 @@ export const AppProvider = ({ children }) => {
 
     Axios.get(`/api/plans/${state.user.id}`).then((res) => {
       if (res.data.plan) {
+        console.log("state.user.id", state.user.id);
         dispatch({
           type: "SET_PLANS",
           payload: {
@@ -51,6 +52,7 @@ export const AppProvider = ({ children }) => {
         });
         
         Axios.get(`/api/events/${state.plan[0].id}`).then((res) => {
+          console.log("state.plan[0].id: ", state.plan[0].id);
           dispatch({
             type: "SET_EVENTS",
             payload: {
