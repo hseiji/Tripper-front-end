@@ -41,6 +41,11 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
 
+    loadPlanMap();
+  
+  },[]);
+
+  const loadPlanMap = () => {
     Axios.get(`/api/plans/${state.user.id}`).then((res) => {
       if (res.data.plan) {
         console.log("state.user.id", state.user.id);
@@ -63,7 +68,7 @@ export const AppProvider = ({ children }) => {
       }
     });
 
-  },[]);
+  }
     
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
