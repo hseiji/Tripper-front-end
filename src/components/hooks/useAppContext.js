@@ -41,12 +41,12 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
 
-    loadPlanMap();
+    loadPlanEvents();
     console.log("useEffect");
 
   },[]);
 
-  const loadPlanMap = async () => {
+  const loadPlanEvents = async () => {
     const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
     console.log("resp", respPlans);
 
@@ -56,9 +56,10 @@ export const AppProvider = ({ children }) => {
         plans: respPlans.data.rows,
       },
     });
-    
-    const respEvents = await Axios.get(`/api/events/${state.plan[0].id}`)  
-    console.log("state.plan[0].id: ", respEvents);
+
+    console.log("state.plans[0].id", state.plans[0].id);
+    const respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
+    console.log("respEvents: ", respEvents);
      
     dispatch({
       type: "SET_EVENTS",
