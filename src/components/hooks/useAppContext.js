@@ -59,7 +59,8 @@ export const AppProvider = ({ children }) => {
 
     // Set up events for plan (if logged in)
     let respEvents = "";
-    if (state.plans[0].id === undefined) {
+    console.log("state.plans[0].id", state.plans[0].id);
+    if (state.plans[0].id === "") {
       respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
       dispatch({
         type: "SET_EVENTS",
