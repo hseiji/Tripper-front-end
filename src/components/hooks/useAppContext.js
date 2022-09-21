@@ -94,7 +94,8 @@ export const AppProvider = ({ children }) => {
   };
 
   const changePlan = (planId) => {
-    Axios.get(`/api/plans/${planId}`).then((res) => {
+    Axios.get(`/api/events/${planId}`).then((res) => {
+      console.log("changing plan to: ", planId);
       dispatch({
         type: "CHANGE_PLAN",
         payload: {
