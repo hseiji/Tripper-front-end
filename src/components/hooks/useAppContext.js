@@ -23,14 +23,16 @@ const initialState = {
   ],
   selectedPlan: 1,
   showRoutes: false,
-  user: { 
-    name: "Shakespeare", 
-    id: 1,
-    email: "shakespeare@lighthouse.com",
-    password: "password",
-    lat: "43.70773264288628",
-    lng: "-79.37463397752462"
-  },
+  user: [
+    { 
+      name: "Shakespeare", 
+      id: 1,
+      email: "shakespeare@lighthouse.com",
+      password: "password",
+      lat: "43.70773264288628",
+      lng: "-79.37463397752462"
+    },
+  ]
 };
 
 export const AppContext = createContext(initialState);
@@ -60,7 +62,7 @@ export const AppProvider = ({ children }) => {
         });
       }
     });
-    
+
   },[]);
     
   const addPlan = (planName) => {
