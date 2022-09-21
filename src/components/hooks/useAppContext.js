@@ -53,7 +53,7 @@ export const AppProvider = ({ children }) => {
     dispatch({
       type: "SET_PLANS",
       payload: {
-        plans: respPlans.rows,
+        plans: respPlans.data.rows,
       },
     });
     
@@ -63,7 +63,7 @@ export const AppProvider = ({ children }) => {
     dispatch({
       type: "SET_EVENTS",
       payload: {
-        events: respEvents.rows,
+        events: respEvents.data.rows,
       },
     });
 
@@ -77,7 +77,7 @@ export const AppProvider = ({ children }) => {
           dispatch({
             type: "SET_PLANS",
             payload: {
-              plans: res.rows,
+              plans: res.data.rows,
             },
           });
 
@@ -85,7 +85,7 @@ export const AppProvider = ({ children }) => {
             dispatch({
               type: "SET_EVENTS",
               payload: {
-                events: res.rows,
+                events: res.data.rows,
               },
             });
           });
@@ -99,7 +99,7 @@ export const AppProvider = ({ children }) => {
       dispatch({
         type: "CHANGE_PLAN",
         payload: {
-          events: res.data.event,
+          events: res.data.rows,
           selectedPlan: planId,
         },
       });
