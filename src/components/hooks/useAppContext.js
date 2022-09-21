@@ -46,27 +46,25 @@ export const AppProvider = ({ children }) => {
 
   },[]);
 
-  const loadPlanMap = () => {
-    Axios.get(`/api/plans/${state.user.id}`).then((res) => {
-      if (res.data.plan) {
-        console.log("state.user.id", state.user.id);
-        dispatch({
-          type: "SET_PLANS",
-          payload: {
-            plans: res.rows,
-          },
-        });
-        
-        Axios.get(`/api/events/${state.plan[0].id}`).then((res) => {
-          console.log("state.plan[0].id: ", state.plan[0].id);
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: res.rows,
-            },
-          });
-        });
-      }
+  const loadPlanMap = async () => {
+    const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
+    console.log("resp", respPlans);
+
+    dispatch({
+      type: "SET_PLANS",
+      payload: {
+        plans: respPlans.rows,
+      },
+    });
+    
+    const respEvents = await Axios.get(`/api/events/${state.plan[0].id}`)  
+    console.log("state.plan[0].id: ", respEvents);
+     
+    dispatch({
+      type: "SET_EVENTS",
+      payload: {
+        events: respEvents.rows,
+      },
     });
 
   }
@@ -79,15 +77,15 @@ export const AppProvider = ({ children }) => {
           dispatch({
             type: "SET_PLANS",
             payload: {
-              plans: res.data.plan,
+              plans: res.rows,
             },
           });
 
-          Axios.get(`/api/users/plans/${res.data.plan[0].id}`).then((res) => {
+          Axios.get(`/api/events/${res.data.plan[0].id}`).then((res) => {
             dispatch({
               type: "SET_EVENTS",
               payload: {
-                events: res.data.event,
+                events: res.rows,
               },
             });
           });
