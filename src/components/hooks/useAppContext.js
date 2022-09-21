@@ -42,7 +42,8 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
 
     loadPlanMap();
-  
+    console.log("useEffect");
+
   },[]);
 
   const loadPlanMap = () => {
