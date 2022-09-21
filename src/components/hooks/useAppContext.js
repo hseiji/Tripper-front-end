@@ -23,16 +23,14 @@ const initialState = {
   ],
   selectedPlan: 1,
   showRoutes: false,
-  user: [
-    { 
+  user: { 
       name: "Shakespeare", 
       id: 1,
       email: "shakespeare@lighthouse.com",
       password: "password",
       lat: "43.70773264288628",
       lng: "-79.37463397752462"
-    },
-  ]
+  },
 };
 
 export const AppContext = createContext(initialState);
@@ -43,7 +41,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
 
-    Axios.get(`/api/plans/${state.user[0].id}`).then((res) => {
+    Axios.get(`/api/plans/${state.user.id}`).then((res) => {
       if (res.data.plan) {
         dispatch({
           type: "SET_PLANS",
