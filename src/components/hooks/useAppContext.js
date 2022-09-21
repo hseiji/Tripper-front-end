@@ -48,8 +48,8 @@ export const AppProvider = ({ children }) => {
 
   const loadPlanEvents = async () => {
 
+    // Set up plans from user (if logged in)
     const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
-
     dispatch({
       type: "SET_PLANS",
       payload: {
@@ -57,15 +57,20 @@ export const AppProvider = ({ children }) => {
       },
     });
 
-    const respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
+    // Set up events for plan (if logged in)
+    let respEvents = "";
+    if (state.plans[0].id) {
+      respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
+      dispatch({
+        type: "SET_EVENTS",
+        payload: {
+          events: respEvents.data.rows,
+        },
+      });
+    } else {
+      console.log("User not logged in.");
+    }
      
-    dispatch({
-      type: "SET_EVENTS",
-      payload: {
-        events: respEvents.data.rows,
-      },
-    });
-
   }
     
   const addPlan = (planName) => {
