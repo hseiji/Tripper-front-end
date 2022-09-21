@@ -10,16 +10,16 @@ const initialState = {
   keyword: "",
   //Load plans where user_id = 1
   plans: [
-    {
-      id: 1,
-      name: "Day in Toronto",
-      user_id: 1,
-    },
-    {
-      id: 2,
-      name: "Fun Weekend",
-      user_id: 1,
-    },
+    // {
+    //   id: 1,
+    //   name: "Day in Toronto",
+    //   user_id: 1,
+    // },
+    // {
+    //   id: 2,
+    //   name: "Fun Weekend",
+    //   user_id: 1,
+    // },
   ],
   selectedPlan: 1,
   showRoutes: false,
