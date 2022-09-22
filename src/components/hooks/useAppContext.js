@@ -40,46 +40,45 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   
-  const loadPlans = async () => {
+  const loadPlans = () => {
 
-    // // Set up plans from user (if logged in)
-    // Axios.get(`/api/plans/${state.user.id}`)
-    //   .then((res) => {
-    //     dispatch({
-    //       type: "SET_PLANS",
-    //       payload: {
-    //         plans: res.data.rows,
-    //       },
-    //     });
-    //   })
-    //   .then(() => {
-    //     Axios.get(`/api/events/${state.selectedPlan}`)
-    //     .then((res) => {
-    //       dispatch({
-    //         type: "SET_EVENTS",
-    //         payload: {
-    //           events: res.data.rows,
-    //         },
-    //       });
-    //     })
-    //   })
-    const resPlan = await Axios.get(`/api/plans/${state.user.id}`);
-    dispatch({
-      type: "SET_PLANS",
-      payload: {
-        plans: resPlan.data.rows,
-      },
-    });
+    // Set up plans and events
+    Axios.get(`/api/plans/${state.user.id}`)
+      .then((res) => {
+        dispatch({
+          type: "SET_PLANS",
+          payload: {
+            plans: res.data.rows,
+          },
+        });
+      })
+      .then(() => {
+        Axios.get(`/api/events/${state.selectedPlan}`)
+        .then((res) => {
+          dispatch({
+            type: "SET_EVENTS",
+            payload: {
+              events: res.data.rows,
+            },
+          });
+        })
+      })
 
-    const resEvent = await Axios.get(`/api/plans/${state.selectedPlan}`);
-    dispatch({
-      type: "SET_EVENTS",
-      payload: {
-        events: resEvent.data.rows,
-      },
-    });
+    // const resPlan = await Axios.get(`/api/plans/${state.user.id}`);
+    // dispatch({
+    //   type: "SET_PLANS",
+    //   payload: {
+    //     plans: resPlan.data.rows,
+    //   },
+    // });
 
-
+    // const resEvent = await Axios.get(`/api/plans/${state.selectedPlan}`);
+    // dispatch({
+    //   type: "SET_EVENTS",
+    //   payload: {
+    //     events: resEvent.data.rows,
+    //   },
+    // });
 
   }
   
@@ -266,8 +265,6 @@ export const AppProvider = ({ children }) => {
     keyword: state.keyword,
     setKeyword,
     selectedPlan: state.selectedPlan,
-    loadPlans,
-    loadEvents,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
