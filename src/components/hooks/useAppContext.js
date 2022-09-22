@@ -41,10 +41,10 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
 
+    console.log("Loading Plans and Events...");
     loadPlanEvents();
-    console.log("useEffect");
 
-  },[]);
+  },[state.plans]);
 
   const loadPlanEvents = async () => {
 
