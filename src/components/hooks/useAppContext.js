@@ -26,13 +26,14 @@ export const AppContext = createContext(initialState);
 export const AppProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
+  let planNum = 0;
   
   const loadPlans = () => {
 
     // Set up plans and events
     Axios.get(`/api/plans/${state.user.id}`)
       .then((res) => {
+        planNum = res.data.rows[0].id;
         dispatch({
           type: "SET_PLANS",
           payload: {
@@ -40,17 +41,17 @@ export const AppProvider = ({ children }) => {
           },
         });
       })
-      .then(() => {
-        Axios.get(`/api/events/${state.selectedPlan}`)
-        .then((res) => {
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: res.data.rows,
-            },
-          });
-        })
-      })
+      // .then(() => {
+      //   Axios.get(`/api/events/${state.selectedPlan}`)
+      //   .then((res) => {
+      //     dispatch({
+      //       type: "SET_EVENTS",
+      //       payload: {
+      //         events: res.data.rows,
+      //       },
+      //     });
+      //   })
+      // })
 
     // const resPlan = Axios.get(`/api/plans/${state.user.id}`);
     // dispatch({
@@ -62,24 +63,24 @@ export const AppProvider = ({ children }) => {
 
   }
   
-  // const loadEvents = () => {
-  //   console.log("selectedPlan: ", state.selectedPlan);
-  //   const resEvent = Axios.get(`/api/plans/${state.selectedPlan}`);
-  //   dispatch({
-  //     type: "SET_EVENTS",
-  //     payload: {
-  //       events: resEvent.data.rows,
-  //     },
-  //   });
-  // }
+  const loadEvents = () => {
+    console.log("planNum: ", planNum);
+    const resEvent = Axios.get(`/api/plans/${planNum}`);
+    dispatch({
+      type: "SET_EVENTS",
+      payload: {
+        events: resEvent.data.rows,
+      },
+    });
+  }
 
 
   useEffect(() => {
 
     console.log("Loading Plans and Events...");
-    loadPlans();
+    loadEvents();
 
-  },[]);
+  },[planNum]);
 
     
   const addPlan = (planName) => {
@@ -240,7 +241,7 @@ export const AppProvider = ({ children }) => {
     setKeyword,
     selectedPlan: state.selectedPlan,
     loadPlans,
-    // loadEvents,
+    loadEvents,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
