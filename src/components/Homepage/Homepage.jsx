@@ -8,10 +8,10 @@ import { AppContext } from "../hooks/useAppContext";
 
 export default function Homepage() {
   
-  const { user, loadPlans, loadEvents } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   
-  loadPlans();
-  loadEvents();
+  // loadPlans();
+  // loadEvents();
 
   return (
     <div className="wrapper-main">

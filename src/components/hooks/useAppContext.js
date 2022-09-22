@@ -39,18 +39,12 @@ export const AppProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-
-  // useEffect(() => {
-
-  //   console.log("Loading Plans and Events...");
-  //   loadEvents();
-
-  // },[]);
-
+  let respPlans;
+  
   const loadPlans = async () => {
 
     // Set up plans from user (if logged in)
-    const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
+    respPlans = await Axios.get(`/api/plans/${state.user.id}`)
     dispatch({
       type: "SET_PLANS",
       payload: {
@@ -58,6 +52,15 @@ export const AppProvider = ({ children }) => {
       },
     });
   }
+  loadPlans();
+
+
+  useEffect(() => {
+
+    console.log("Loading Plans and Events...");
+    loadEvents();
+
+  },[respPlans]);
 
   const loadEvents = async () => {
     // Set up events for plan - choose first one - (if logged in)
