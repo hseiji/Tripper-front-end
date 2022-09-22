@@ -8,20 +8,8 @@ const initialState = {
   results: [],
   location: "",
   keyword: "",
-  //Load plans where user_id = 1
-  plans: [
-    // {
-    //   id: 1,
-    //   name: "Day in Toronto",
-    //   user_id: 1,
-    // },
-    // {
-    //   id: 2,
-    //   name: "Fun Weekend",
-    //   user_id: 1,
-    // },
-  ],
-  selectedPlan: 1,
+  plans: [],
+  selectedPlan: 0,
   showRoutes: false,
   user: { 
       name: "Shakespeare", 
@@ -43,42 +31,42 @@ export const AppProvider = ({ children }) => {
   const loadPlans = () => {
 
     // Set up plans and events
-    Axios.get(`/api/plans/${state.user.id}`)
-      .then((res) => {
-        dispatch({
-          type: "SET_PLANS",
-          payload: {
-            plans: res.data.rows,
-          },
-        });
-      })
-      .then(() => {
-        Axios.get(`/api/events/${state.selectedPlan}`)
-        .then((res) => {
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: res.data.rows,
-            },
-          });
-        })
-      })
+    // Axios.get(`/api/plans/${state.user.id}`)
+    //   .then((res) => {
+    //     dispatch({
+    //       type: "SET_PLANS",
+    //       payload: {
+    //         plans: res.data.rows,
+    //       },
+    //     });
+    //   })
+    //   .then(() => {
+    //     Axios.get(`/api/events/${state.selectedPlan}`)
+    //     .then((res) => {
+    //       dispatch({
+    //         type: "SET_EVENTS",
+    //         payload: {
+    //           events: res.data.rows,
+    //         },
+    //       });
+    //     })
+    //   })
 
-    // const resPlan = await Axios.get(`/api/plans/${state.user.id}`);
-    // dispatch({
-    //   type: "SET_PLANS",
-    //   payload: {
-    //     plans: resPlan.data.rows,
-    //   },
-    // });
+    const resPlan = await Axios.get(`/api/plans/${state.user.id}`);
+    dispatch({
+      type: "SET_PLANS",
+      payload: {
+        plans: resPlan.data.rows,
+      },
+    });
 
-    // const resEvent = await Axios.get(`/api/plans/${state.selectedPlan}`);
-    // dispatch({
-    //   type: "SET_EVENTS",
-    //   payload: {
-    //     events: resEvent.data.rows,
-    //   },
-    // });
+    const resEvent = await Axios.get(`/api/plans/${resPlan.data.rows.plans[0].id}`);
+    dispatch({
+      type: "SET_EVENTS",
+      payload: {
+        events: resEvent.data.rows,
+      },
+    });
 
   }
   
