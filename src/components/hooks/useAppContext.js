@@ -28,7 +28,7 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   
-  const loadPlans = async () => {
+  const loadPlans = () => {
 
     // Set up plans and events
     // Axios.get(`/api/plans/${state.user.id}`)
@@ -52,7 +52,7 @@ export const AppProvider = ({ children }) => {
     //     })
     //   })
 
-    const resPlan = await Axios.get(`/api/plans/${state.user.id}`);
+    const resPlan = Axios.get(`/api/plans/${state.user.id}`);
     dispatch({
       type: "SET_PLANS",
       payload: {
@@ -62,9 +62,9 @@ export const AppProvider = ({ children }) => {
 
   }
   
-  const loadEvents = async () => {
+  const loadEvents = () => {
     console.log("selectedPlan: ", state.selectedPlan);
-    const resEvent = await Axios.get(`/api/plans/${state.selectedPlan}`);
+    const resEvent = Axios.get(`/api/plans/${state.selectedPlan}`);
     dispatch({
       type: "SET_EVENTS",
       payload: {
