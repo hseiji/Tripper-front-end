@@ -90,23 +90,6 @@ export const AppProvider = ({ children }) => {
 
   },[]);
 
-  const loadEvents = async () => {
-    // Set up events for plan - choose first one - (if logged in)
-    let respEvents = "";
-    console.log("state:", state);
-    if (state.plans.length !== 0) {
-      respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
-      dispatch({
-        type: "SET_EVENTS",
-        payload: {
-          events: respEvents.data.rows,
-        },
-      });
-    } else {
-      console.log("User not logged in.");
-    }
-
-  }
     
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
