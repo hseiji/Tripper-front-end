@@ -40,29 +40,47 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   
-  const loadPlans = () => {
+  const loadPlans = async () => {
 
-    // Set up plans from user (if logged in)
-    Axios.get(`/api/plans/${state.user.id}`)
-      .then((res) => {
-        dispatch({
-          type: "SET_PLANS",
-          payload: {
-            plans: res.data.rows,
-          },
-        });
-      })
-      .then(() => {
-        Axios.get(`/api/events/${state.selectedPlan}`)
-        .then((res) => {
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: res.data.rows,
-            },
-          });
-        })
-      })
+    // // Set up plans from user (if logged in)
+    // Axios.get(`/api/plans/${state.user.id}`)
+    //   .then((res) => {
+    //     dispatch({
+    //       type: "SET_PLANS",
+    //       payload: {
+    //         plans: res.data.rows,
+    //       },
+    //     });
+    //   })
+    //   .then(() => {
+    //     Axios.get(`/api/events/${state.selectedPlan}`)
+    //     .then((res) => {
+    //       dispatch({
+    //         type: "SET_EVENTS",
+    //         payload: {
+    //           events: res.data.rows,
+    //         },
+    //       });
+    //     })
+    //   })
+    const resPlan = await Axios.get(`/api/plans/${state.user.id}`);
+    dispatch({
+      type: "SET_PLANS",
+      payload: {
+        plans: resPlan.data.rows,
+      },
+    });
+
+    const resEvent = await Axios.get(`/api/plans/${state.selectedPlan}`);
+    dispatch({
+      type: "SET_EVENTS",
+      payload: {
+        events: resEvent.data.rows,
+      },
+    });
+
+
+
   }
   
 
