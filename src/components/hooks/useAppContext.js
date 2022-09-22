@@ -38,27 +38,32 @@ export const AppProvider = ({ children }) => {
           payload: {
             plans: plans.data.rows,
           },
-        });        
+        });
+
+        const loadE = async () => {
+          try {
+            const events = await Axios.get(`/api/plans/${plans.data.rows[0].id}`)
+            dispatch({
+              type: "SET_EVENTS",
+              payload: {
+                events: events.data.rows,
+              },
+            });   
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        loadE();
+
+
+
       } catch (error) {
         console.log(error);
       }
     }
     loadP();
 
-    const loadE = async () => {
-      try {
-        const events = await Axios.get(`/api/plans/${state.selectedPlan}`)
-        dispatch({
-          type: "SET_EVENTS",
-          payload: {
-            events: events.data.rows,
-          },
-        });   
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    loadE();
+
 
   },[]);
 
