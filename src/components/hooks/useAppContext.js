@@ -57,9 +57,9 @@ export const AppProvider = ({ children }) => {
       },
     });
 
-    // Set up events for plan (if logged in)
+    // Set up events for plan - choose first one - (if logged in)
     let respEvents = "";
-    console.log("respPlans:", respPlans.data.rows);
+    console.log("state:", state);
     if (state.plans.length !== 0) {
       respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
       dispatch({
