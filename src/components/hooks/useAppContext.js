@@ -78,7 +78,7 @@ export const AppProvider = ({ children }) => {
           dispatch({
             type: "SET_PLANS",
             payload: {
-              plans: respPlans.data.rows,
+              plans: res.data.rows,
             }
           })
           Axios.get(`/api/events/${state.plans[0].id}`)
@@ -86,7 +86,7 @@ export const AppProvider = ({ children }) => {
               dispatch({
                 type: "SET_EVENTS",
                 payload: {
-                  events: respEvents.data.rows,
+                  events: res.data.rows,
                 },
               });          
             })
