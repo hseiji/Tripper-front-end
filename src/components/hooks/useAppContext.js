@@ -33,6 +33,7 @@ export const AppProvider = ({ children }) => {
     // Set up plans and events
     Axios.get(`/api/plans/${state.user.id}`)
       .then((res) => {
+        console.log("res.data.rows[0]", res.data.rows[0].id);
         planNum = res.data.rows[0].id;
         dispatch({
           type: "SET_PLANS",
@@ -41,30 +42,10 @@ export const AppProvider = ({ children }) => {
           },
         });
       })
-      // .then(() => {
-      //   Axios.get(`/api/events/${state.selectedPlan}`)
-      //   .then((res) => {
-      //     dispatch({
-      //       type: "SET_EVENTS",
-      //       payload: {
-      //         events: res.data.rows,
-      //       },
-      //     });
-      //   })
-      // })
-
-    // const resPlan = Axios.get(`/api/plans/${state.user.id}`);
-    // dispatch({
-    //   type: "SET_PLANS",
-    //   payload: {
-    //     plans: resPlan.data.rows,
-    //   },
-    // });
-
   }
   
   loadPlans();
-  
+
   const loadEvents = () => {
     console.log("planNum: ", planNum);
     const resEvent = Axios.get(`/api/plans/${planNum}`);
