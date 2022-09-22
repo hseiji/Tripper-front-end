@@ -48,31 +48,51 @@ export const AppProvider = ({ children }) => {
 
   const loadPlanEvents = async () => {
 
-    // Set up plans from user (if logged in)
-    const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
-    dispatch({
-      type: "SET_PLANS",
-      payload: {
-        plans: respPlans.data.rows,
-      },
-    });
+    // // Set up plans from user (if logged in)
+    // const respPlans = await Axios.get(`/api/plans/${state.user.id}`)
+    // dispatch({
+    //   type: "SET_PLANS",
+    //   payload: {
+    //     plans: respPlans.data.rows,
+    //   },
+    // });
 
-    // Set up events for plan - choose first one - (if logged in)
-    let respEvents = "";
-    console.log("state:", state);
-    if (state.plans.length !== 0) {
-      respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
-      dispatch({
-        type: "SET_EVENTS",
-        payload: {
-          events: respEvents.data.rows,
-        },
-      });
-    } else {
-      console.log("User not logged in.");
-    }
+    // // Set up events for plan - choose first one - (if logged in)
+    // let respEvents = "";
+    // console.log("state:", state);
+    // if (state.plans.length !== 0) {
+    //   respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
+    //   dispatch({
+    //     type: "SET_EVENTS",
+    //     payload: {
+    //       events: respEvents.data.rows,
+    //     },
+    //   });
+    // } else {
+    //   console.log("User not logged in.");
+    // }
+
+    Axios.get(`/api/plans/${state.user.id}`)
+      .then((res) => {
+        if (res.data.plans) {
+          dispatch({
+            type: "SET_PLANS",
+            payload: {
+              plans: respPlans.data.rows,
+            }
+          })
+          Axios.get(`/api/events/${state.plans[0].id}`)
+            .then((res) => {
+              dispatch({
+                type: "SET_EVENTS",
+                payload: {
+                  events: respEvents.data.rows,
+                },
+              });          
+            })
+        }
      
-  }
+    });
     
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
