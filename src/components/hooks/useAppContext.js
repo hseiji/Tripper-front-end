@@ -51,6 +51,8 @@ export const AppProvider = ({ children }) => {
             plans: res.data.rows,
           },
         });
+      })
+      .then(() => {
         Axios.get(`/api/events/${state.plans[0].id}`)
           .then((res) => {
             dispatch({
