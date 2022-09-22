@@ -63,6 +63,8 @@ export const AppProvider = ({ children }) => {
 
   }
   
+  loadPlans();
+  
   const loadEvents = () => {
     console.log("planNum: ", planNum);
     const resEvent = Axios.get(`/api/plans/${planNum}`);
