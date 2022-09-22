@@ -28,7 +28,7 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   
-  const loadPlans = () => {
+  const loadPlans = async () => {
 
     // Set up plans and events
     // Axios.get(`/api/plans/${state.user.id}`)
