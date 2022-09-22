@@ -15,9 +15,9 @@ export const NewPlan = () => {
     <form onSubmit={handleSubmit}>
       <label>
         <b style={{"fontFamily":"Copperplate", "fontSize":"20px"}}>Add Plan:</b>
-        <input type="text" />
+        <input type="text" id="planName" />
       </label>
-      <input type="submit" id="planName" />
+      <input type="submit" />
     </form>
   );
 };
