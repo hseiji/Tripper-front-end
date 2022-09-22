@@ -8,12 +8,7 @@ import { AppContext } from "../hooks/useAppContext";
 
 export default function Homepage() {
   
-  const { user, loadPlans, loadEvents } = useContext(AppContext);
-  
-  useEffect(() => {
-    loadPlans();
-    loadEvents();
-  }, [])
+  const { user } = useContext(AppContext);
 
   return (
     <div className="wrapper-main">

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import AppReducer from "./useAppReducer";
 import Axios from "axios";
 
@@ -31,55 +31,55 @@ export const AppProvider = ({ children }) => {
   const loadPlans = () => {
 
     // Set up plans and events
-    // Axios.get(`/api/plans/${state.user.id}`)
-    //   .then((res) => {
-    //     dispatch({
-    //       type: "SET_PLANS",
-    //       payload: {
-    //         plans: res.data.rows,
-    //       },
-    //     });
-    //   })
-    //   .then(() => {
-    //     Axios.get(`/api/events/${state.selectedPlan}`)
-    //     .then((res) => {
-    //       dispatch({
-    //         type: "SET_EVENTS",
-    //         payload: {
-    //           events: res.data.rows,
-    //         },
-    //       });
-    //     })
-    //   })
+    Axios.get(`/api/plans/${state.user.id}`)
+      .then((res) => {
+        dispatch({
+          type: "SET_PLANS",
+          payload: {
+            plans: res.data.rows,
+          },
+        });
+      })
+      .then(() => {
+        Axios.get(`/api/events/${state.selectedPlan}`)
+        .then((res) => {
+          dispatch({
+            type: "SET_EVENTS",
+            payload: {
+              events: res.data.rows,
+            },
+          });
+        })
+      })
 
-    const resPlan = Axios.get(`/api/plans/${state.user.id}`);
-    dispatch({
-      type: "SET_PLANS",
-      payload: {
-        plans: resPlan.data.rows,
-      },
-    });
+    // const resPlan = Axios.get(`/api/plans/${state.user.id}`);
+    // dispatch({
+    //   type: "SET_PLANS",
+    //   payload: {
+    //     plans: resPlan.data.rows,
+    //   },
+    // });
 
   }
   
-  const loadEvents = () => {
-    console.log("selectedPlan: ", state.selectedPlan);
-    const resEvent = Axios.get(`/api/plans/${state.selectedPlan}`);
-    dispatch({
-      type: "SET_EVENTS",
-      payload: {
-        events: resEvent.data.rows,
-      },
-    });
-  }
+  // const loadEvents = () => {
+  //   console.log("selectedPlan: ", state.selectedPlan);
+  //   const resEvent = Axios.get(`/api/plans/${state.selectedPlan}`);
+  //   dispatch({
+  //     type: "SET_EVENTS",
+  //     payload: {
+  //       events: resEvent.data.rows,
+  //     },
+  //   });
+  // }
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   console.log("Loading Plans and Events...");
-  //   loadPlans();
+    console.log("Loading Plans and Events...");
+    loadPlans();
 
-  // },[]);
+  },[]);
 
     
   const addPlan = (planName) => {
@@ -240,7 +240,7 @@ export const AppProvider = ({ children }) => {
     setKeyword,
     selectedPlan: state.selectedPlan,
     loadPlans,
-    loadEvents,
+    // loadEvents,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
