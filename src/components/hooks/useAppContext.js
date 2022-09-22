@@ -29,8 +29,7 @@ export const AppProvider = ({ children }) => {
   let planNum = 0;
   
   const loadPlans = () => {
-
-    // Set up plans and events
+    console.log("loading plan");
     Axios.get(`/api/plans/${state.user.id}`)
       .then((res) => {
         console.log("res.data.rows[0]", res.data.rows[0].id);
@@ -43,27 +42,28 @@ export const AppProvider = ({ children }) => {
         });
       })
   }
-  
-  loadPlans();
+
 
   const loadEvents = () => {
     console.log("planNum: ", planNum);
-    const resEvent = Axios.get(`/api/plans/${planNum}`);
-    dispatch({
-      type: "SET_EVENTS",
-      payload: {
-        events: resEvent.data.rows,
-      },
-    });
+    Axios.get(`/api/plans/${planNum}`)
+    .then((res) => {
+      dispatch({
+        type: "SET_EVENTS",
+        payload: {
+          events: res.data.rows,
+        },
+      });
+    })
   }
-
 
   useEffect(() => {
 
     console.log("Loading Plans and Events...");
+    loadPlans();
     loadEvents();
 
-  },[planNum]);
+  },[]);
 
     
   const addPlan = (planName) => {
