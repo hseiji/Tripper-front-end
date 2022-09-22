@@ -50,7 +50,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const loadE = async () => {
       try {
-        const events = await Axios.get(`/api/plans/${state.plans[0].id}`)
+        const events = await Axios.get(`/api/events/${state.plans[0].id}`)
         dispatch({
           type: "SET_EVENTS",
           payload: {
