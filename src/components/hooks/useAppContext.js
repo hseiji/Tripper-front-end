@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import AppReducer from "./useAppReducer";
 import Axios from "axios";
 
@@ -60,24 +60,26 @@ export const AppProvider = ({ children }) => {
       },
     });
 
-    console.log("respPlan:", resPlan.data.rows);
-    const resEvent = await Axios.get(`/api/plans/${resPlan.data.rows[0].id}`);
+  }
+  
+  const loadEvents = async () => {
+    console.log("selectedPlan: ", state.selectedPlan);
+    const resEvent = await Axios.get(`/api/plans/${state.selectedPlan}`);
     dispatch({
       type: "SET_EVENTS",
       payload: {
         events: resEvent.data.rows,
       },
     });
-
   }
-  
 
-  useEffect(() => {
 
-    console.log("Loading Plans and Events...");
-    loadPlans();
+  // useEffect(() => {
 
-  },[]);
+  //   console.log("Loading Plans and Events...");
+  //   loadPlans();
+
+  // },[]);
 
     
   const addPlan = (planName) => {
@@ -237,6 +239,8 @@ export const AppProvider = ({ children }) => {
     keyword: state.keyword,
     setKeyword,
     selectedPlan: state.selectedPlan,
+    loadPlans,
+    loadEvents,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

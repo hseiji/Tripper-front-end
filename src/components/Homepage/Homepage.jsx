@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Map } from "../Map/Map";
 import "./Homepage.css";
 import { ResultList } from "../ResultList/ResultList";
@@ -8,10 +8,12 @@ import { AppContext } from "../hooks/useAppContext";
 
 export default function Homepage() {
   
-  const { user } = useContext(AppContext);
+  const { user, loadPlans, loadEvents } = useContext(AppContext);
   
-  // loadPlans();
-  // loadEvents();
+  useEffect(() => {
+    loadPlans();
+    loadEvents();
+  }, [])
 
   return (
     <div className="wrapper-main">
