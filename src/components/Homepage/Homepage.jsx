@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Map } from "../Map/Map";
 import "./Homepage.css";
 import { ResultList } from "../ResultList/ResultList";
