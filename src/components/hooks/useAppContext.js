@@ -53,15 +53,7 @@ export const AppProvider = ({ children }) => {
         });
       })
       .then(() => {
-        Axios.get(`/api/events/${state.plans[0].id}`)
-          .then((res) => {
-            dispatch({
-              type: "SET_EVENTS",
-              payload: {
-                events: res.data.rows,
-              },
-            });        
-          })
+        console.log(state.selectedPlan);
       })
   }
   
