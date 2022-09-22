@@ -67,7 +67,7 @@ export const AppProvider = ({ children }) => {
     
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
-    Axios.put("/api/plans/", { info }).then((res) => {
+    Axios.put(`/api/plans/${state.user.id}`, { info }).then((res) => {
       Axios.get(`/api/plans/${state.user.id}`).then((res) => {
         if (res.data.plan) {
           dispatch({
