@@ -93,6 +93,8 @@ export const AppProvider = ({ children }) => {
         }
      
     });
+
+  }
     
   const addPlan = (planName) => {
     const info = { userId: state.user.id, planName: planName };
