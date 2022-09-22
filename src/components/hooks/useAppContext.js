@@ -44,7 +44,7 @@ export const AppProvider = ({ children }) => {
     console.log("Loading Plans and Events...");
     loadPlanEvents();
 
-  },[state.plans]);
+  },[]);
 
   const loadPlanEvents = async () => {
 
@@ -59,7 +59,7 @@ export const AppProvider = ({ children }) => {
 
     // Set up events for plan (if logged in)
     let respEvents = "";
-    console.log("length:", state.plans.length);
+    console.log("respPlans:", respPlans.data.rows);
     if (state.plans.length !== 0) {
       respEvents = await Axios.get(`/api/events/${state.plans[0].id}`);
       dispatch({
