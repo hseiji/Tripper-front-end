@@ -7,6 +7,8 @@ export const NewPlan = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     addPlan(event.target[0].value);
+    const plan = document.getElementById("planName");
+    plan.value = "";
   };
 
   return (
@@ -15,7 +17,7 @@ export const NewPlan = () => {
         <b style={{"fontFamily":"Copperplate", "fontSize":"20px"}}>Add Plan:</b>
         <input type="text" />
       </label>
-      <input type="submit" />
+      <input type="submit" id="planName" />
     </form>
   );
 };

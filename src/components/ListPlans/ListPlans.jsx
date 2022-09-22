@@ -4,6 +4,10 @@ import { AppContext } from "../hooks/useAppContext";
 export const ListPlans = () => {
   const { plans, changePlan, onOffRoutes } = useContext(AppContext);
 
+  // useEffect(() => {
+    
+  // }, [])
+
   return (
     <p>
       <b style={{"fontFamily":"Copperplate", "fontSize":"20px"}}>My Plan: </b>
