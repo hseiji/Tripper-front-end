@@ -39,33 +39,30 @@ export const AppProvider = ({ children }) => {
             plans: plans.data.rows,
           },
         });
-
-        const loadE = async () => {
-          try {
-            const events = await Axios.get(`/api/plans/${plans.data.rows[0].id}`)
-            dispatch({
-              type: "SET_EVENTS",
-              payload: {
-                events: events.data.rows,
-              },
-            });   
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        loadE();
-
-
-
       } catch (error) {
         console.log(error);
       }
     }
     loadP();
 
-
-
   },[]);
+
+  useEffect(() => {
+    const loadE = async () => {
+      try {
+        const events = await Axios.get(`/api/plans/${state.plans[0].id}`)
+        dispatch({
+          type: "SET_EVENTS",
+          payload: {
+            events: events.data.rows,
+          },
+        });   
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loadE();
+  }, [state.plans])
 
     
   const addPlan = (planName) => {
