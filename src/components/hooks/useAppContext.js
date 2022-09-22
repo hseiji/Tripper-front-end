@@ -40,12 +40,12 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log("Loading Plans and Events...");
-    loadEvents();
+  //   console.log("Loading Plans and Events...");
+  //   loadEvents();
 
-  },[state.plans]);
+  // },[]);
 
   const loadPlans = async () => {
 
@@ -235,6 +235,7 @@ export const AppProvider = ({ children }) => {
     setKeyword,
     selectedPlan: state.selectedPlan,
     loadPlans,
+    loadEvents,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
