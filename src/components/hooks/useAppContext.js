@@ -61,7 +61,7 @@ export const AppProvider = ({ children }) => {
     });
 
     console.log("respPlan:", resPlan.data.rows);
-    const resEvent = await Axios.get(`/api/plans/${resPlan.data.rows.plans[0].id}`);
+    const resEvent = await Axios.get(`/api/plans/${resPlan.data.rows[0].id}`);
     dispatch({
       type: "SET_EVENTS",
       payload: {
