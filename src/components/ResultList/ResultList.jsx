@@ -11,7 +11,7 @@ export const ResultList = () => {
   },[results])
 
   return (
-    <div className="results-wrapper">
+    <div className="results-wrapper" data-testid="result-list-id">
       {results.length > 0 && <h3 style={{"marginLeft": "40px","fontFamily":"Copperplate", "fontSize":"25px"}}>Results:</h3>}
       <ul style={{"listStyle": "none"}}>
         {

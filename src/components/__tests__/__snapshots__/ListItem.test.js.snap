@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<li
+  data-testid="list-item-id"
+>
+  <div
+    className="card-item"
+  >
+    <a
+      rel="noopener noreferrer"
+      style={
+        {
+          "fontSize": "20px",
+          "fontWeight": "300",
+        }
+      }
+      target="_blank"
+    />
+    <p
+      style={
+        {
+          "fontSize": "15px",
+        }
+      }
+    />
+    <p
+      style={
+        {
+          "fontSize": "15px",
+        }
+      }
+    >
+      Rating: 
+       (
+       reviews)
+    </p>
+    <a
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <img
+        alt=""
+        height="150px"
+        width="150px"
+      />
+    </a>
+    <i
+      className="fa-regular fa-2x fa-square-plus"
+      onClick={[Function]}
+    />
+  </div>
+</li>
+`;
