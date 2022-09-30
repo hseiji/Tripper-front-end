@@ -37,7 +37,7 @@ export default function Navbar() {
       {user.name && (
         <div className="signOut">
           <h3>Hi, {user.name}</h3>
-          <Link to="/profile">
+          <Link to="/login">
             {/* <button>User Profile</button> */}
           </Link>
           <Link to="/login">
