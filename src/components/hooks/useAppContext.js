@@ -249,6 +249,7 @@ export const AppProvider = ({ children }) => {
     setKeyword,
     selectedPlan: state.selectedPlan,
     loginUser,
+    accessTkn: state.accessTkn,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
