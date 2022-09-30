@@ -1,129 +1,79 @@
-import React from "react";
+import Axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import { AppContext } from "../hooks/useAppContext";
 
 import "./Login.css";
 
-export default function Login({ username, password }) {
-  // React States
-  // const [errorMessages, setErrorMessages] = useState({});
-  // const [isSubmitted, setIsSubmitted] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   password: "",
-  // });
+export default function Login() {
 
-  // const { username, password } = formData;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const nav = useNavigate();
 
-  // User Login info
-  // const database = [
-  //   {
-  //     username: "user1",
-  //     password: "pass1",
-  //   },
-  //   {
-  //     username: "lighthouse",
-  //     password: "labs",
-  //   },
-  // ];
+  const handleSubmit = async (event) => {
+    //Prevent page reload
+    event.preventDefault();
 
-  // const errors = {
-  //   uname: "invalid username",
-  //   pass: "invalid password",
-  // };
+    try {
+      console.log("handling submit");
+      const user = {
+        email,
+        password
+      }
+      console.log("user:", user);
+  
+      const newUser = await Axios.post('/api/users/login', user);
+      console.log("newUser:", newUser);
+  
+      nav("/");
+    } catch (error) {
+      console.log(error);
+    }
 
-  // const { login } = useContext(AppContext);
+  };
 
-  // const handleChange = (e) => {
-  //   const newFormData = { ...formData };
-  //   newFormData[e.target.name] = e.target.value;
-  //   setFormData(newFormData);
-  // };
 
-  // const handleSubmit = (event) => {
-  //   //Prevent page reload
-  //   event.preventDefault();
+  const isSubmitted = false;
+  const renderForm = (
+    
+    <div className="form">
+      <form onSubmit={()=>console.log("submit test")}>
+        <div className="input-container">
+          <label>Email </label>
+          <input
+            
+            onChange={e => setEmail(e.target.value)}
+            type="text"
+            name="email"
+            required
+          />
+          
+        </div>
+        <div className="input-container">
+          <label>Password </label>
+          <input
+            
+            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            type="text"
+            required
+          />
+          
+        </div>
+        <div className="button-container">
+          <input type="submit" onClick={handleSubmit}/>
+        </div>
+      </form>
+    </div>
+  );
 
-  //   login(username, password);
-  //   console.log("name:", username);
-
-    // // Check if input form is equal with database
-    // const loginChecker = database.filter((credential) => {
-    //   return (
-    //     credential.username === username && credential.password === password
-    //   );
-    // });
-
-    // if (loginChecker.length) {
-    //   navigate("/");
-    //   setIsSubmitted(true);
-    // }
-  // };
-
-  // var { uname, pass } = document.forms[0];
-  // console.log("doc forms", document.forms);
-  // Find user login info
-  // const userData = database.find((user) => user.username === uname.value);
-
-  // Compare user info
-  //   if (userData) {
-  //     if (userData.password !== pass.value) {
-  //       // Invalid password
-  //       setErrorMessages({ name: "pass", message: errors.pass });
-  //     } else {
-  //       setIsSubmitted(true);
-  //     }
-  //   } else {
-  //     // Username not found
-  //     setErrorMessages({ name: "uname", message: errors.uname });
-  //   }
-  // };
-
-  // Generate JSX code for error message
-  // const renderErrorMessage = (name) =>
-  //   name === errorMessages.name && (
-  //     <div className="error">{errorMessages.message}</div>
-  //   );
-
-  // JSX code for login form
-  // const renderForm = (
-  //   <div className="form">
-  //     <form onSubmit={handleSubmit}>
-  //       <div className="input-container">
-  //         <label>Username </label>
-  //         <input
-  //           value={username}
-  //           onChange={handleChange}
-  //           type="text"
-  //           name="username"
-  //           required
-  //         />
-  //         {/* {renderErrorMessage("uname")} */}
-  //       </div>
-  //       <div className="input-container">
-  //         <label>Password </label>
-  //         <input
-  //           value={password}
-  //           onChange={handleChange}
-  //           name="password"
-  //           type="text"
-  //           required
-  //         />
-  //         {/* {renderErrorMessage("pass")} */}
-  //       </div>
-  //       <div className="button-container">
-  //         <input type="submit" />
-  //       </div>
-  //     </form>
-  //   </div>
-  // );
-
-  console.log(username, password);
 
   return (
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
-        {/* {isSubmitted ? <div>User is successfully logged in</div> : renderForm} */}
+        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
       </div>
     </div>
   );
