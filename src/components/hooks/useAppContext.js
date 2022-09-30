@@ -46,7 +46,7 @@ export const AppProvider = ({ children }) => {
     }
     loadP();
 
-  },[]);
+  },[state.user]);
 
   useEffect(() => {
     const loadE = async () => {
@@ -63,7 +63,7 @@ export const AppProvider = ({ children }) => {
       }
     }
     loadE();
-  }, [state.plans, state.user])
+  }, [state.plans])
 
     
   const addPlan = (planName) => {
