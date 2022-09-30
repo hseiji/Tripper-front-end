@@ -1,12 +1,12 @@
-import Axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { AppContext } from "../hooks/useAppContext";
+import { AppContext } from "../hooks/useAppContext";
 
 import "./Login.css";
 
 export default function Login() {
 
+  const { loginUser } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
@@ -21,11 +21,12 @@ export default function Login() {
         email,
         password
       }
-      console.log("user:", user);
+      // console.log("user:", user);
   
-      const newUser = await Axios.post('/api/users/login', user);
-      console.log("newUser:", newUser);
-  
+      // const newUser = await Axios.post('/api/users/login', user);
+      // console.log("newUser:", newUser);
+      loginUser(user);
+
       nav("/");
     } catch (error) {
       console.log(error);

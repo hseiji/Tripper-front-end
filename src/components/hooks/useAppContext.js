@@ -15,10 +15,11 @@ const initialState = {
       name: "Shakespeare", 
       id: 1,
       email: "shakespeare@lighthouse.com",
-      password: "password",
+      password: "",
       lat: "43.6532976025993",
       lng: "-79.38359538925825"
   },
+  accessTkn: "",
 };
 
 export const AppContext = createContext(initialState);
@@ -192,7 +193,7 @@ export const AppProvider = ({ children }) => {
         location: state.location,
       },
     });    
-  }
+  };
 
   const setKeyword = (data) => {
     state.keyword = data;
@@ -202,7 +203,32 @@ export const AppProvider = ({ children }) => {
         keyword: state.keyword,
       },
     });    
-  }  
+  };
+
+  const loginUser = async (user) => {
+
+    try {
+      const res = await Axios.post(`/api/users/`, user);
+      dispatch({
+        type: "SET_USER",
+        payload: {
+          user: {
+            id: res.data.user_id,
+            name: res.data.user_name, 
+            email: res.data.user_email,
+            password: "",
+            lat: res.data.lat,
+            lng: res.data.lng,            
+          },
+          accessTkn: res.data.accessToken,
+        },
+      });
+      
+    } catch (error) {
+      console.log(error); 
+    }
+
+  };
 
   const value = {
     events: state.events,
@@ -222,7 +248,7 @@ export const AppProvider = ({ children }) => {
     keyword: state.keyword,
     setKeyword,
     selectedPlan: state.selectedPlan,
-
+    loginUser,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
