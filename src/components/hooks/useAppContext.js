@@ -51,7 +51,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     const loadE = async () => {
       try {
-        const events = await Axios.get(`/api/events/${state.plans[0].id}`)
+        const events = await Axios.get(`/api/events/${state.selectedPlan}`)
         dispatch({
           type: "SET_EVENTS",
           payload: {
@@ -209,7 +209,7 @@ export const AppProvider = ({ children }) => {
 
     try {
       const res = await Axios.post(`/api/users/login`, user);
-      
+
       dispatch({
         type: "SET_USER",
         payload: {
