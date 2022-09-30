@@ -208,7 +208,7 @@ export const AppProvider = ({ children }) => {
   const loginUser = async (user) => {
 
     try {
-      const res = await Axios.post(`/api/users/`, user);
+      const res = await Axios.post(`/api/users/login`, user);
       dispatch({
         type: "SET_USER",
         payload: {
