@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("Loading Plans and Events...");
-    
+
     const loadP = async () => {
       try {
         const plans = await Axios.get(`/api/plans/${state.user.id}`);
@@ -62,7 +62,7 @@ export const AppProvider = ({ children }) => {
       }
     }
     loadE();
-  }, [state.plans])
+  }, [state.plans, state.user])
 
     
   const addPlan = (planName) => {
