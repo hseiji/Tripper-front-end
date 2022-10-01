@@ -63,14 +63,17 @@ export const AppProvider = ({ children }) => {
 
       try {
         // const events = await Axios.get(`/api/events/${state.selectedPlan}`)
-        console.log("state.user: ", state.user.length);
-        const events = await Axios.get(`/api/events/}`, config)
-        dispatch({
-          type: "SET_EVENTS",
-          payload: {
-            events: events.data.rows,
-          },
-        });
+
+        if (state.user !== undefined) {
+          const events = await Axios.get(`/api/events/}`, config)
+          dispatch({
+            type: "SET_EVENTS",
+            payload: {
+              events: events.data.rows,
+            },
+          });
+        }
+        
       } catch (error) {
         console.log(error);
       }
