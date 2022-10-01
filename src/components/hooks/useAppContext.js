@@ -57,13 +57,13 @@ export const AppProvider = ({ children }) => {
     const loadE = async () => {
       console.log("Loading Events ...");
 
-      // const config = {
-      //   headers: { Authorization: `Bearer ${state.accessTkn}` }
-      // };
+      const config = {
+        headers: { Authorization: `Bearer ${state.accessTkn}` }
+      };
 
       try {
-        const events = await Axios.get(`/api/events/${state.selectedPlan}`)
-        // const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
+        // const events = await Axios.get(`/api/events/${state.selectedPlan}`)
+        const events = await Axios.get(`/api/events}`, config)
         dispatch({
           type: "SET_EVENTS",
           payload: {
