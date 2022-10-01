@@ -12,12 +12,12 @@ const initialState = {
   selectedPlan: 0,
   showRoutes: false,
   user: { 
-      name: "Shakespeare", 
-      id: 1,
-      email: "shakespeare@lighthouse.com",
-      password: "",
-      lat: "43.6532976025993",
-      lng: "-79.38359538925825"
+      // name: "Shakespeare", 
+      // id: 1,
+      // email: "shakespeare@lighthouse.com",
+      // password: "",
+      // lat: "43.6532976025993",
+      // lng: "-79.38359538925825"
   },
   accessTkn: "",
 };
