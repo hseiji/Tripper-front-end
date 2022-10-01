@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
-    console.log("Loading Plans and Events...");
+    console.log("Loading Plans ...");
 
     const config = {
       headers: { Authorization: `Bearer ${state.accessTkn}` }
@@ -55,8 +55,14 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const loadE = async () => {
+      console.log("Loading Events ...");
+
+      const config = {
+        headers: { Authorization: `Bearer ${state.accessTkn}` }
+      };
+
       try {
-        const events = await Axios.get(`/api/events/${state.selectedPlan}`)
+        const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
         dispatch({
           type: "SET_EVENTS",
           payload: {
