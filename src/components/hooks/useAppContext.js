@@ -65,7 +65,7 @@ export const AppProvider = ({ children }) => {
         // const events = await Axios.get(`/api/events/${state.selectedPlan}`)
 
         if (state.user !== undefined) {
-          const events = await Axios.get(`/api/events/}`, config)
+          const events = await Axios.get(`/api/events/`, config)
           dispatch({
             type: "SET_EVENTS",
             payload: {
