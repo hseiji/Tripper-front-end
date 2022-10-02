@@ -57,22 +57,29 @@ export const AppProvider = ({ children }) => {
     const loadE = async () => {
       console.log("Loading Events ...");
 
-      const config = {
-        headers: { Authorization: `Bearer ${state.accessTkn}` }
-      };
+      // const config = {
+      //   headers: { Authorization: `Bearer ${state.accessTkn}` }
+      // };
 
       try {
-        // const events = await Axios.get(`/api/events/${state.selectedPlan}`)
+        const events = await Axios.get(`/api/events/${state.selectedPlan}`)
 
-        if (state.user !== undefined) {
-          const events = await Axios.get(`/api/events/`, config)
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: events.data.rows,
-            },
-          });
-        }
+        dispatch({
+          type: "SET_EVENTS",
+          payload: {
+            events: events.data.rows,
+          },
+        });
+
+        // if (state.user !== undefined) {
+        //   const events = await Axios.get(`/api/events/`, config)
+        //   dispatch({
+        //     type: "SET_EVENTS",
+        //     payload: {
+        //       events: events.data.rows,
+        //     },
+        //   });
+        // }
         
       } catch (error) {
         console.log(error);
