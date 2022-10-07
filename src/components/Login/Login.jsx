@@ -21,10 +21,7 @@ export default function Login() {
         email,
         password
       }
-      // console.log("user:", user);
-  
-      // const newUser = await Axios.post('/api/users/login', user);
-      // console.log("newUser:", newUser);
+
       loginUser(user);
 
       nav("/");
