@@ -1,8 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tripper
 
-## Available Scripts
-
-In the project directory, you can run:
+This is a project for a day trip planner.
 
 ### `npm start`
 
