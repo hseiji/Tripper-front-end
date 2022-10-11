@@ -56,7 +56,11 @@ const AppReducer = (state, action) => {
       console.log("SET_PLANS: ", payload.plans);
 
       let plans = payload.plans;
-      let selectedPlan = payload.plans[0].id;
+      let selectedPlan = [];
+      if (payload.plans.length > 0) {
+        selectedPlan = payload.plans[0].id;
+      }
+      
       return { ...state, plans, selectedPlan };
 
     case "CHANGE_PLAN":

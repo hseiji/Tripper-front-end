@@ -39,6 +39,14 @@ export const AppProvider = ({ children }) => {
           },
         });
       } catch (error) {
+        if (state.user.name === "") {
+          dispatch({
+            type: "SET_PLANS",
+            payload: {
+              plans: [],
+            },
+          });
+        }
         console.log(error);
       }
     }
@@ -75,6 +83,14 @@ export const AppProvider = ({ children }) => {
         // }
         
       } catch (error) {
+        if (state.user.name === "") {
+          dispatch({
+            type: "SET_EVENTS",
+            payload: {
+              events: [],
+            },
+          });
+        }        
         console.log(error);
       }
     }
@@ -247,20 +263,27 @@ export const AppProvider = ({ children }) => {
 
   };
 
-  const logoutUser = () => {
-    dispatch({
-      type: "SET_USER",
-      payload: {
-        user: {
-          id: "",
-          name: "",
-          email: "",
-          password: "",
-          lat: "",
-          lng: "",
-        }
-      }
-    })
+  const logoutUser = async () => {
+    try {
+      dispatch({
+        type: "SET_USER",
+        payload: {
+          user: {
+            id: "",
+            name: "",
+            email: "",
+            password: "",
+            lat: "",
+            lng: "",
+          }
+        },
+        accessTkn: "",
+      });
+
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const value = {
