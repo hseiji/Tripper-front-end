@@ -247,6 +247,22 @@ export const AppProvider = ({ children }) => {
 
   };
 
+  const logoutUser = () => {
+    dispatch({
+      type: "SET_USER",
+      payload: {
+        user: {
+          id: "",
+          name: "",
+          email: "",
+          password: "",
+          lat: "",
+          lng: "",
+        }
+      }
+    })
+  }
+
   const value = {
     events: state.events,
     user: state.user,
@@ -267,6 +283,7 @@ export const AppProvider = ({ children }) => {
     selectedPlan: state.selectedPlan,
     loginUser,
     accessTkn: state.accessTkn,
+    logoutUser
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
