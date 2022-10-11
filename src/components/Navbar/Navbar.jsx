@@ -8,7 +8,7 @@ const logo = require("./TripperLogo.png");
 
 export default function Navbar() {
 
-  const { user } = useContext(AppContext);
+  const { user, logoutUser } = useContext(AppContext);
 
   return (
     <div className="navbar">
@@ -40,9 +40,9 @@ export default function Navbar() {
           <Link to="/login">
             {/* <button>User Profile</button> */}
           </Link>
-          <Link to="/login">
-            {/* <button onClick={clearData}>Log Out</button> */}
-            <b>Logout</b>
+          <Link to="/">
+            <button onClick={logoutUser}>Log Out</button>
+            {/* <b>Logout</b> */}
           </Link>
         </div>
       )}
