@@ -58,28 +58,31 @@ export const AppProvider = ({ children }) => {
     const loadE = async () => {
       console.log("Loading Events ...");
 
-      // const config = {
-      //   headers: { Authorization: `Bearer ${state.accessTkn}` }
-      // };
+      const config = {
+        headers: { Authorization: `Bearer ${state.accessTkn}` }
+      };
+
+      console.log("selectedPlan:", state.selectedPlan);
 
       try {
-        const events = await Axios.get(`/api/events/${state.selectedPlan}`)
+        // const events = await Axios.get(`/api/events/${state.selectedPlan}`)
+        // dispatch({
+        //   type: "SET_EVENTS",
+        //   payload: {
+        //     events: events.data.rows,
+        //   },
+        // });
 
-        dispatch({
-          type: "SET_EVENTS",
-          payload: {
-            events: events.data.rows,
-          },
-        });
-
+        // console.log("state.user: ", state.user);
         // if (state.user !== undefined) {
-        //   const events = await Axios.get(`/api/events/`, config)
-        //   dispatch({
-        //     type: "SET_EVENTS",
-        //     payload: {
-        //       events: events.data.rows,
-        //     },
-        //   });
+          const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
+          console.log("config:", config);
+          dispatch({
+            type: "SET_EVENTS",
+            payload: {
+              events: events.data.rows,
+            },
+          });
         // }
         
       } catch (error) {
@@ -91,7 +94,7 @@ export const AppProvider = ({ children }) => {
             },
           });
         }        
-        console.log(error);
+        console.log("Error while setting events: ", error);
       }
     }
     loadE();
@@ -123,17 +126,20 @@ export const AppProvider = ({ children }) => {
     });
   };
 
-  const changePlan = (planId) => {
-    Axios.get(`/api/events/${planId}`).then((res) => {
-      console.log("changing plan to: ", planId);
-      dispatch({
-        type: "CHANGE_PLAN",
-        payload: {
-          events: res.data.rows,
-          selectedPlan: planId,
-        },
-      });
+  const changePlan = async (planId) => {
+    
+    console.log("on changePlan to: ", planId);
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
+    const res = await Axios.get(`/api/events/${planId}`, config)
+
+    dispatch({
+      type: "CHANGE_PLAN",
+      payload: {
+        events: res.data.rows,
+        selectedPlan: planId,
+      },
     });
+    
   };
 
   const addToMap = (event) => {
