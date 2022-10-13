@@ -65,16 +65,6 @@ export const AppProvider = ({ children }) => {
       console.log("selectedPlan:", state.selectedPlan);
 
       try {
-        // const events = await Axios.get(`/api/events/${state.selectedPlan}`)
-        // dispatch({
-        //   type: "SET_EVENTS",
-        //   payload: {
-        //     events: events.data.rows,
-        //   },
-        // });
-
-        // console.log("state.user: ", state.user);
-        // if (state.user !== undefined) {
           const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
           console.log("config:", config);
           dispatch({
@@ -82,9 +72,7 @@ export const AppProvider = ({ children }) => {
             payload: {
               events: events.data.rows,
             },
-          });
-        // }
-        
+          });        
       } catch (error) {
         if (state.user.name === "") {
           dispatch({
@@ -101,29 +89,57 @@ export const AppProvider = ({ children }) => {
   }, [state.plans])
 
     
-  const addPlan = (planName) => {
-    const info = { userId: state.user.id, planName: planName };
-    Axios.put(`/api/plans/${state.user.id}`, { info }).then((res) => {
-      Axios.get(`/api/plans/${state.user.id}`).then((res) => {
-        if (res.data.plan) {
-          dispatch({
-            type: "SET_PLANS",
-            payload: {
-              plans: res.data.rows,
-            },
-          });
+  const addPlan = async (planName) => {
+    // const info = { userId: state.user.id, planName: planName };
+    // Axios.put(`/api/plans/${state.user.id}`, { info }).then((res) => {
+    //   Axios.get(`/api/plans/${state.user.id}`).then((res) => {
+    //     if (res.data.plan) {
+    //       dispatch({
+    //         type: "SET_PLANS",
+    //         payload: {
+    //           plans: res.data.rows,
+    //         },
+    //       });
 
-          Axios.get(`/api/events/${res.data.plans[0].id}`).then((res) => {
-            dispatch({
-              type: "SET_EVENTS",
-              payload: {
-                events: res.data.rows,
-              },
-            });
-          });
-        }
-      });
-    });
+    //       Axios.get(`/api/events/${res.data.plans[0].id}`).then((res) => {
+    //         dispatch({
+    //           type: "SET_EVENTS",
+    //           payload: {
+    //             events: res.data.rows,
+    //           },
+    //         });
+    //       });
+    //     }
+    //   });
+    // });
+
+    try {
+      const info = { userId: state.user.id, planName: planName, userEmail: state.user.email };
+      const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
+  
+      await Axios.put(`/api/plans/${state.user.id}`, { info });
+      const res = await Axios.get(`/api/plans/`, config);
+      console.log("res >> ", res);
+  
+      // if (res.data.rows.length > 0) {
+        console.log("reloading plans...");
+        dispatch({
+          type: "SET_PLANS",
+          payload: {
+            plans: res.data.rows,
+          },
+        });
+        const res2 = await Axios.get(`/api/events/${state.selectedPlan}`, config)
+        dispatch({
+          type: "SET_EVENTS",
+          payload: {
+            events: res2.data.rows,
+          },
+        });
+      // }      
+    } catch (error) {
+      console.log("Error adding plan: ", error);
+    }
   };
 
   const changePlan = async (planId) => {
@@ -143,12 +159,9 @@ export const AppProvider = ({ children }) => {
   };
 
   const addToMap = (event) => {
+    
     const updatedMap = state.events.concat(event);
-
     const updatedResults = state.results.filter((res) => event.id !== res.id);
-
-    // console.log("updatedResults", updatedResults);
-
     const selectedPlan = state.selectedPlan;
 
     console.log("EVENT ADDED: ", event);
