@@ -15,6 +15,16 @@ const AppReducer = (state, action) => {
       events = payload.events;
       return { ...state, events };
 
+    case "DELETE_PLAN":
+      console.log("DELETE_PLAN: ", payload.plans);
+
+      let plans = payload.plans;
+      let selectedPlan = [];
+      if (payload.plans.length > 0) {
+        selectedPlan = payload.plans[0].id;
+      }
+      return { ...state, plans };
+
     case "SET_KEYWORD":
       console.log("SET_KEYWORD: ", payload);
 
@@ -55,8 +65,8 @@ const AppReducer = (state, action) => {
     case "SET_PLANS":
       console.log("SET_PLANS: ", payload.plans);
 
-      let plans = payload.plans;
-      let selectedPlan = [];
+      plans = payload.plans;
+      selectedPlan = [];
       if (payload.plans.length > 0) {
         selectedPlan = payload.plans[0].id;
       }

@@ -165,12 +165,8 @@ export const AppProvider = ({ children }) => {
     const selectedPlan = state.selectedPlan;
 
     console.log("EVENT ADDED: ", event);
-    const config = { 
-      headers: { Authorization: `Bearer ${state.accessTkn}` },
-      event,
-    };
 
-    await Axios.put(`/api/events/${selectedPlan}`, config);
+    await Axios.put(`/api/events/${selectedPlan}`, { event }, { headers: { Authorization: `Bearer ${state.accessTkn}` } });
 
     dispatch({
       type: "ADD_TO_MAP",
@@ -183,8 +179,9 @@ export const AppProvider = ({ children }) => {
 
   const deleteFromMap = (id) => {
     const updatedMap = state.events.filter((el) => el.id !== id);
-    console.log("deleteFromMap: ", updatedMap);
-    console.log("id of deleted", id);
+    console.log("state.events: ", state.events);
+    console.log("eventId: ", id);
+    console.log("updatedMap: ", updatedMap);
 
     Axios.delete(`/api/events/id/${id}`).then(() => {
       console.log("Cancelled.");
@@ -197,6 +194,22 @@ export const AppProvider = ({ children }) => {
       },
     });
   };
+
+  const deletePlan = async (planId) => {
+    const updatedPlans = state.plans.filter((el) => el.id !== Number(planId));
+    console.log("state.plans: ", state.plans);
+    console.log("planId: ", planId);
+    console.log("updatedPlans: ", updatedPlans);
+
+    await Axios.delete(`/api/plans/${planId}`);
+
+    dispatch({
+      type: "DELETE_PLAN",
+      payload: {
+        plans: updatedPlans,
+      },
+    });
+  };  
 
   const setResults = (data) => {
     // console.log("addResults AppProvider: ", data);
@@ -327,7 +340,8 @@ export const AppProvider = ({ children }) => {
     selectedPlan: state.selectedPlan,
     loginUser,
     accessTkn: state.accessTkn,
-    logoutUser
+    logoutUser,
+    deletePlan,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

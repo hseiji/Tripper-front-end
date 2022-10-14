@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AppContext } from "../hooks/useAppContext";
 
 export const ListPlans = () => {
-  const { plans, changePlan, onOffRoutes } = useContext(AppContext);
+  const { plans, changePlan, onOffRoutes, selectedPlan, deletePlan } = useContext(AppContext);
 
   // useEffect(() => {
     
@@ -19,6 +19,11 @@ export const ListPlans = () => {
       <i
         className="fa-solid fa-map-location-dot fa-2x"
         onClick={() => onOffRoutes()}
+      ></i>
+      <i
+        className="fa-solid fa-trash"
+        onClick={() => deletePlan(selectedPlan)}
+        style={{"paddingLeft": "10px"}}
       ></i>
     </p>
   );
