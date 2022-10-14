@@ -177,16 +177,20 @@ export const AppProvider = ({ children }) => {
     });
   };
 
-  const deleteFromMap = (id) => {
+  const deleteFromMap = async (id) => {
     const updatedMap = state.events.filter((el) => el.id !== id);
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
     console.log("state.events: ", state.events);
     console.log("eventId: ", id);
     console.log("updatedMap: ", updatedMap);
 
-    Axios.delete(`/api/events/id/${id}`).then(() => {
-      console.log("Cancelled.");
-    });
+    // Axios.delete(`/api/events/id/${id}`).then(() => {
+    //   console.log("Cancelled.");
+    // });
 
+    await Axios.delete(`/api/events/id/${id}`, config)
+    console.log("Deleted");
+    
     dispatch({
       type: "DELETE_FROM_MAP",
       payload: {
