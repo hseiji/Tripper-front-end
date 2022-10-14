@@ -201,11 +201,12 @@ export const AppProvider = ({ children }) => {
 
   const deletePlan = async (planId) => {
     const updatedPlans = state.plans.filter((el) => el.id !== Number(planId));
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
     console.log("state.plans: ", state.plans);
     console.log("planId: ", planId);
     console.log("updatedPlans: ", updatedPlans);
 
-    await Axios.delete(`/api/plans/${planId}`);
+    await Axios.delete(`/api/plans/${planId}`, config);
 
     dispatch({
       type: "DELETE_PLAN",
@@ -226,14 +227,15 @@ export const AppProvider = ({ children }) => {
     });
   };
 
-  const changeIconColor = (id) => {
+  const changeIconColor = async (id) => {
     const index = state.events.findIndex((ele) => ele.id === id);
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
+    
     //Mark as done/undone
     state.events[index].done = !state.events[index].done;
 
-    Axios.put(`/api/events/done/${id}`).then(() => {
-      console.log("Marked as done!");
-    });
+    await Axios.put(`/api/events/done/${id}`, "",config)
+    console.log("Marked as done!");
 
     dispatch({
       type: "UPDATE_ICON_COLOR",
