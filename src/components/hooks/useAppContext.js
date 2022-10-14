@@ -158,17 +158,19 @@ export const AppProvider = ({ children }) => {
     
   };
 
-  const addToMap = (event) => {
+  const addToMap = async (event) => {
     
     const updatedMap = state.events.concat(event);
     const updatedResults = state.results.filter((res) => event.id !== res.id);
     const selectedPlan = state.selectedPlan;
 
     console.log("EVENT ADDED: ", event);
+    const config = { 
+      headers: { Authorization: `Bearer ${state.accessTkn}` },
+      event,
+    };
 
-    Axios.put(`/api/events/${selectedPlan}`, { event }).then((res) => {
-      console.log(res);
-    });
+    await Axios.put(`/api/events/${selectedPlan}`, config);
 
     dispatch({
       type: "ADD_TO_MAP",
