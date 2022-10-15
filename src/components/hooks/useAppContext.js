@@ -3,7 +3,6 @@ import AppReducer from "./useAppReducer";
 import Axios from "axios";
 
 const initialState = {
-  //Load events where user_id = 1 and plans[0] (initial)
   events: [],
   results: [],
   location: "",
@@ -22,15 +21,14 @@ export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   useEffect(() => {
-    console.log("Loading Plans ...");
-
-    const config = {
-      headers: { Authorization: `Bearer ${state.accessTkn}` }
-    };
-
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
     const loadP = async () => {
       try {
-        // const plans = await Axios.get(`/api/plans/${state.user.id}`);
+        if (state.accessTkn === "") {
+          console.log("Not logged in");
+          return;
+        }
+        console.log("Loading Plans ...");
         const plans = await Axios.get(`/api/plans/`, config);
         dispatch({
           type: "SET_PLANS",
@@ -47,7 +45,7 @@ export const AppProvider = ({ children }) => {
             },
           });
         }
-        console.log(error);
+        console.log("Error while loading plans: ", error);
       }
     }
     loadP();
@@ -56,23 +54,23 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const loadE = async () => {
-      console.log("Loading Events ...");
-
-      const config = {
-        headers: { Authorization: `Bearer ${state.accessTkn}` }
-      };
-
-      console.log("selectedPlan:", state.selectedPlan);
-
+      const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
+      console.log("selectedPlan: ", state.selectedPlan);
+      
       try {
-          const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
-          console.log("config:", config);
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: events.data.rows,
-            },
-          });        
+        if (state.accessTkn === "") {
+          console.log("Not logged in");
+          return;
+        }
+        console.log("Loading Events ...");
+        const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
+        console.log("config:", config);
+        dispatch({
+          type: "SET_EVENTS",
+          payload: {
+            events: events.data.rows,
+          },
+        });        
       } catch (error) {
         if (state.user.name === "") {
           dispatch({
@@ -90,53 +88,28 @@ export const AppProvider = ({ children }) => {
 
     
   const addPlan = async (planName) => {
-    // const info = { userId: state.user.id, planName: planName };
-    // Axios.put(`/api/plans/${state.user.id}`, { info }).then((res) => {
-    //   Axios.get(`/api/plans/${state.user.id}`).then((res) => {
-    //     if (res.data.plan) {
-    //       dispatch({
-    //         type: "SET_PLANS",
-    //         payload: {
-    //           plans: res.data.rows,
-    //         },
-    //       });
-
-    //       Axios.get(`/api/events/${res.data.plans[0].id}`).then((res) => {
-    //         dispatch({
-    //           type: "SET_EVENTS",
-    //           payload: {
-    //             events: res.data.rows,
-    //           },
-    //         });
-    //       });
-    //     }
-    //   });
-    // });
-
+    // console.log("Adding plan...");
     try {
       const info = { userId: state.user.id, planName: planName, userEmail: state.user.email };
       const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
   
-      await Axios.put(`/api/plans/${state.user.id}`, { info });
+      await Axios.put(`/api/plans/${state.user.id}`, { info }, config);
       const res = await Axios.get(`/api/plans/`, config);
-      console.log("res >> ", res);
-  
-      // if (res.data.rows.length > 0) {
-        console.log("reloading plans...");
-        dispatch({
-          type: "SET_PLANS",
-          payload: {
-            plans: res.data.rows,
-          },
-        });
-        const res2 = await Axios.get(`/api/events/${state.selectedPlan}`, config)
-        dispatch({
-          type: "SET_EVENTS",
-          payload: {
-            events: res2.data.rows,
-          },
-        });
-      // }      
+
+      console.log("reloading plans...");
+      dispatch({
+        type: "SET_PLANS",
+        payload: {
+          plans: res.data.rows,
+        },
+      });
+      const res2 = await Axios.get(`/api/events/${state.selectedPlan}`, config)
+      dispatch({
+        type: "SET_EVENTS",
+        payload: {
+          events: res2.data.rows,
+        },
+      });
     } catch (error) {
       console.log("Error adding plan: ", error);
     }
@@ -160,13 +133,14 @@ export const AppProvider = ({ children }) => {
 
   const addToMap = async (event) => {
     
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
     const updatedMap = state.events.concat(event);
     const updatedResults = state.results.filter((res) => event.id !== res.id);
     const selectedPlan = state.selectedPlan;
 
     console.log("EVENT ADDED: ", event);
 
-    await Axios.put(`/api/events/${selectedPlan}`, { event }, { headers: { Authorization: `Bearer ${state.accessTkn}` } });
+    await Axios.put(`/api/events/${selectedPlan}`, { event }, config);
 
     dispatch({
       type: "ADD_TO_MAP",
@@ -184,10 +158,6 @@ export const AppProvider = ({ children }) => {
     console.log("eventId: ", id);
     console.log("updatedMap: ", updatedMap);
 
-    // Axios.delete(`/api/events/id/${id}`).then(() => {
-    //   console.log("Cancelled.");
-    // });
-
     await Axios.delete(`/api/events/id/${id}`, config)
     console.log("Deleted");
     
@@ -202,12 +172,11 @@ export const AppProvider = ({ children }) => {
   const deletePlan = async (planId) => {
     const updatedPlans = state.plans.filter((el) => el.id !== Number(planId));
     const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
-    console.log("state.plans: ", state.plans);
-    console.log("planId: ", planId);
-    console.log("updatedPlans: ", updatedPlans);
+    // console.log("state.plans: ", state.plans);
+    // console.log("planId: ", planId);
+    // console.log("updatedPlans: ", updatedPlans);
 
     await Axios.delete(`/api/plans/${planId}`, config);
-
     dispatch({
       type: "DELETE_PLAN",
       payload: {
@@ -217,8 +186,6 @@ export const AppProvider = ({ children }) => {
   };  
 
   const setResults = (data) => {
-    // console.log("addResults AppProvider: ", data);
-
     dispatch({
       type: "SET_RESULTS",
       payload: {

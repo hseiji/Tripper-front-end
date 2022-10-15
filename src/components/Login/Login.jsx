@@ -16,7 +16,7 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      console.log("handling submit");
+      // console.log("handling submit");
       const user = {
         email,
         password
