@@ -14,15 +14,11 @@ const initialState = {
   selectedPlan: 8,
   showRoutes: false,
   user: {
-    // name: "Homer",
-    // email: "homer@buup.com",
-    // password: 123123,
     name: "Harriot Porter",
     email: "harrit@hogwarts.ca",
-    password: 123123,
+    password: "",
   },
-  // accessTkn: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkhvbWVyIiwiZW1haWwiOiJob21lckBidXVwLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJERzY0JZSlN2ZGI2Y0M4VWpuYVRTSXVDZWE5WnlJUERac1M1U2JBR1lSV1VoLnhFNjVJeC95IiwibGF0IjoiNDMuNjUzMjk3NjAyNTk5MyIsImxuZyI6Ii03OS4zODM1OTUzODkyNTgyNSIsImlhdCI6MTY2NTg0MTY0Nn0.iryvFsh5LC4rRLQHTG1QAqkjbEKwN8Fl6cuaCMof0lA"
-  accessTkn: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkhhcnJ5IFBvcnRlciIsImVtYWlsIjoiaGFycnlAbWFnaWMuY2EiLCJwYXNzd29yZCI6IiQyYiQxMCRnOFQzQzBwS2NSL3gvOFVWU2JsVm9PdGtaaXNNb05RcVFPcWdHaEVlbDJKUmswU09YSEpZQyIsImxhdCI6IjQzLjY1MzI5NzYwMjU5OTMiLCJsbmciOiItNzkuMzgzNTk1Mzg5MjU4MjUiLCJpYXQiOjE2NjU4NDE2NDZ9.IdHZ6XSwq1EjIr1tSBa06nuG_7EE1VbdwJdg2Rojgbo",
+  accessTkn: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IkhhcnJpb3QgUG9ydGVyIiwiZW1haWwiOiJoYXJyaXRAaG9nd2FydHMuY2EiLCJwYXNzd29yZCI6IiQyYiQxMCRRbnV5TmpGenBFcndVaDdici85OXh1Y2x3MzhGYjNVdVVuNHlCbjllS1lBY1dCQ3lNZzlKZSIsImxhdCI6IjQzLjY1MzI5NzYwMjU5OTMiLCJsbmciOiItNzkuMzgzNTk1Mzg5MjU4MjUiLCJpYXQiOjE2NjU5NzQ2ODV9.akxmxp53nAGFGMmqHD5uzodeNp8KfaYU4DujgprogN4",
 };
 
 export const AppContext = createContext(initialState);
@@ -39,7 +35,9 @@ export const AppProvider = ({ children }) => {
         return;
       }
       console.log("Loading Plans ...");
+      console.log("Loading Plans ... state.user.email=", state.user.email);
       const plans = await Axios.get(`/api/plans/`, config);
+      console.log("Loading Plans ... res=", plans);
       dispatch({
         type: "SET_PLANS",
         payload: {
@@ -47,6 +45,7 @@ export const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
+      console.log("Error on loadP:", error);
       if (state.user.name === "") {
         dispatch({
           type: "SET_PLANS",
