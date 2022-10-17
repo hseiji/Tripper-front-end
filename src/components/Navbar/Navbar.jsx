@@ -37,12 +37,8 @@ export default function Navbar() {
       {user.name && (
         <div className="signOut">
           <h3>Hi, {user.name}</h3>
-          <Link to="/login">
-            {/* <button>User Profile</button> */}
-          </Link>
           <Link to="/">
             <button onClick={logoutUser}>Log Out</button>
-            {/* <b>Logout</b> */}
           </Link>
         </div>
       )}
