@@ -7,11 +7,22 @@ const initialState = {
   results: [],
   location: "",
   keyword: "",
-  plans: [],
-  selectedPlan: 0,
+  plans: [
+    {id: 8, user_id: 4, name: 'Magic Places', ordering: 1, user_email: 'harrit@hogwarts.ca'},
+    {id: 9, user_id: 4, name: 'Abracadabra', ordering: 1, user_email: 'harrit@hogwarts.ca'},
+  ],
+  selectedPlan: 8,
   showRoutes: false,
-  user: {},
-  accessTkn: "",
+  user: {
+    // name: "Homer",
+    // email: "homer@buup.com",
+    // password: 123123,
+    name: "Harriot Porter",
+    email: "harrit@hogwarts.ca",
+    password: 123123,
+  },
+  // accessTkn: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkhvbWVyIiwiZW1haWwiOiJob21lckBidXVwLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJERzY0JZSlN2ZGI2Y0M4VWpuYVRTSXVDZWE5WnlJUERac1M1U2JBR1lSV1VoLnhFNjVJeC95IiwibGF0IjoiNDMuNjUzMjk3NjAyNTk5MyIsImxuZyI6Ii03OS4zODM1OTUzODkyNTgyNSIsImlhdCI6MTY2NTg0MTY0Nn0.iryvFsh5LC4rRLQHTG1QAqkjbEKwN8Fl6cuaCMof0lA"
+  accessTkn: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkhhcnJ5IFBvcnRlciIsImVtYWlsIjoiaGFycnlAbWFnaWMuY2EiLCJwYXNzd29yZCI6IiQyYiQxMCRnOFQzQzBwS2NSL3gvOFVWU2JsVm9PdGtaaXNNb05RcVFPcWdHaEVlbDJKUmswU09YSEpZQyIsImxhdCI6IjQzLjY1MzI5NzYwMjU5OTMiLCJsbmciOiItNzkuMzgzNTk1Mzg5MjU4MjUiLCJpYXQiOjE2NjU4NDE2NDZ9.IdHZ6XSwq1EjIr1tSBa06nuG_7EE1VbdwJdg2Rojgbo",
 };
 
 export const AppContext = createContext(initialState);
@@ -20,69 +31,70 @@ export const AppProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-  useEffect(() => {
-    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
-    const loadP = async () => {
-      try {
-        if (state.accessTkn === "") {
-          console.log("Not logged in");
-          return;
-        }
-        console.log("Loading Plans ...");
-        const plans = await Axios.get(`/api/plans/`, config);
+  const loadP = async () => {
+    try {
+      const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
+      if (state.accessTkn === "") {
+        console.log("Not logged in");
+        return;
+      }
+      console.log("Loading Plans ...");
+      const plans = await Axios.get(`/api/plans/`, config);
+      dispatch({
+        type: "SET_PLANS",
+        payload: {
+          plans: plans.data.rows,
+        },
+      });
+    } catch (error) {
+      if (state.user.name === "") {
         dispatch({
           type: "SET_PLANS",
           payload: {
-            plans: plans.data.rows,
+            plans: [],
           },
         });
-      } catch (error) {
-        if (state.user.name === "") {
-          dispatch({
-            type: "SET_PLANS",
-            payload: {
-              plans: [],
-            },
-          });
-        }
-        console.log("Error while loading plans: ", error);
       }
+      console.log("Error while loading plans: ", error);
     }
-    loadP();
+  }
 
-  },[state.user]);
-
-  useEffect(() => {
-    const loadE = async () => {
-      const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
-      console.log("selectedPlan: ", state.selectedPlan);
-      
-      try {
-        if (state.accessTkn === "") {
-          console.log("Not logged in");
-          return;
-        }
-        console.log("Loading Events ...");
-        const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
-        console.log("config:", config);
+  const loadE = async () => {
+    const config = { headers: { Authorization: `Bearer ${state.accessTkn}` } };
+    console.log("selectedPlan: ", state.selectedPlan);
+    
+    try {
+      if (state.accessTkn === "") {
+        console.log("Not logged in");
+        return;
+      }
+      console.log("Loading Events ...");
+      const events = await Axios.get(`/api/events/${state.selectedPlan}`, config)
+      console.log("config:", config);
+      dispatch({
+        type: "SET_EVENTS",
+        payload: {
+          events: events.data.rows,
+        },
+      });        
+    } catch (error) {
+      if (state.user.name === "") {
         dispatch({
           type: "SET_EVENTS",
           payload: {
-            events: events.data.rows,
+            events: [],
           },
-        });        
-      } catch (error) {
-        if (state.user.name === "") {
-          dispatch({
-            type: "SET_EVENTS",
-            payload: {
-              events: [],
-            },
-          });
-        }        
-        console.log("Error while setting events: ", error);
-      }
+        });
+      }        
+      console.log("Error while setting events: ", error);
     }
+  }
+
+  useEffect(() => {
+    loadP();
+  },[state.user]);
+
+  useEffect(() => {
     loadE();
   }, [state.plans])
 

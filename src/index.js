@@ -11,7 +11,8 @@ import Axios from 'axios';
 //   Axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 // }
 
-Axios.defaults.baseURL = "http://localhost:9000/"
+// Axios.defaults.baseURL = "http://localhost:9000/"
+Axios.defaults.baseURL = "https://tripper-planner.herokuapp.com/"
 
 ReactDOM.render(
   <BrowserRouter>
