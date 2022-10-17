@@ -3,6 +3,7 @@ import AppReducer from "./useAppReducer";
 import Axios from "axios";
 
 const initialState = {
+  //For testing/demo purposes
   events: [],
   results: [],
   location: "",
