@@ -35,9 +35,7 @@ export const AppProvider = ({ children }) => {
         return;
       }
       console.log("Loading Plans ...");
-      console.log("Loading Plans ... state.user.email=", state.user.email);
       const plans = await Axios.get(`/api/plans/`, config);
-      console.log("Loading Plans ... res=", plans);
       dispatch({
         type: "SET_PLANS",
         payload: {
