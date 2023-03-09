@@ -12,7 +12,7 @@ import Axios from 'axios'
 // }
 
 // Axios.defaults.baseURL = "http://localhost:9000/"
-Axios.defaults.baseURL = 'https://triper-api.onrender.com/'
+Axios.defaults.baseURL = 'https://tripper.henriqu3.com/'
 
 ReactDOM.render(
   <BrowserRouter>
