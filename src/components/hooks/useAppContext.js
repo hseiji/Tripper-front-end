@@ -17,7 +17,7 @@ const initialState = {
     email: 'frodo@lotr.com',
     password: '',
   },
-  accessTkn: process.env.REACT_APP_ACCESS_TOKEN_SECRET,
+  accessTkn: process.env.ACCESS_TOKEN_SECRET,
 }
 
 export const AppContext = createContext(initialState)
